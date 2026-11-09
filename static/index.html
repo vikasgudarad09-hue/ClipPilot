@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipPilot | Put Your Video Publishing on Autopilot</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="brand-section">
+      <div class="brand-logo">✈️</div>
+      <div class="brand-text">
+        <h1>ClipPilot</h1>
+      </div>
+      <span class="brand-badge">🇮🇳 Made in India • Video Publishing on Autopilot</span>
+    </div>
+
+    <div class="nav-stats">
+      <div class="stat-pill">
+        <span>Queue:</span>
+        <span class="num" id="stat-queue-count">0</span>
+      </div>
+      <div class="stat-pill">
+        <span>Scheduled:</span>
+        <span class="num" id="stat-scheduled-count" style="color: #a855f7;">0</span>
+      </div>
+      <div class="stat-pill">
+        <span>Channel:</span>
+        <span class="num" id="stat-platforms-count" style="color: #10b981;">🔴 YouTube Active</span>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn btn-secondary" onclick="openAccountsModal()">
+        <span>🔗 Connect Channels</span>
+      </button>
+      <button class="btn btn-primary" onclick="browseAndAddVideo()">
+        <span>➕ Add Video</span>
+      </button>
+      <button class="btn btn-success" id="btn-start-bulk" onclick="startBulkUpload()">
+        <span>🚀 Publish / Schedule All</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="main-layout">
+    
+    <!-- Left Panel: The Drip-Feed Cadence Engine -->
+    <aside class="sidebar-panel">
+      <div class="panel-card">
+        <h2>⏱️ Smart Cadence Engine</h2>
+        <p class="subtitle">Bulk schedule videos across upcoming days & weeks with 1 click.</p>
+
+        <!-- Frequency per week -->
+        <div class="form-group">
+          <label>Weekly Posting Frequency</label>
+          <div class="freq-buttons">
+            <button class="freq-btn" data-freq="1" onclick="setFrequency(1)">1 / wk</button>
+            <button class="freq-btn" data-freq="2" onclick="setFrequency(2)">2 / wk</button>
+            <button class="freq-btn active" data-freq="3" onclick="setFrequency(3)">3 / wk</button>
+            <button class="freq-btn" data-freq="5" onclick="setFrequency(5)">5 / wk</button>
+            <button class="freq-btn" data-freq="7" onclick="setFrequency(7)">Daily</button>
+            <button class="freq-btn" data-freq="custom" onclick="setFrequency('custom')">Custom</button>
+          </div>
+        </div>
+
+        <!-- Active Days -->
+        <div class="form-group">
+          <label>Target Days</label>
+          <div class="days-grid" id="days-grid">
+            <div class="day-chip active" data-day="Mon" onclick="toggleDay('Mon')">Mon</div>
+            <div class="day-chip" data-day="Tue" onclick="toggleDay('Tue')">Tue</div>
+            <div class="day-chip active" data-day="Wed" onclick="toggleDay('Wed')">Wed</div>
+            <div class="day-chip" data-day="Thu" onclick="toggleDay('Thu')">Thu</div>
+            <div class="day-chip active" data-day="Fri" onclick="toggleDay('Fri')">Fri</div>
+            <div class="day-chip" data-day="Sat" onclick="toggleDay('Sat')">Sat</div>
+            <div class="day-chip" data-day="Sun" onclick="toggleDay('Sun')">Sun</div>
+          </div>
+        </div>
+
+        <!-- Preferred Time -->
+        <div class="form-group">
+          <label>Preferred Posting Time</label>
+          <div class="time-row">
+            <input type="time" id="cadence-time" class="input-dark" value="18:30">
+            <span class="preset-chip" onclick="setTimePreset('18:30')">Peak India (6:30 PM)</span>
+          </div>
+        </div>
+
+        <!-- Start Date -->
+        <div class="form-group">
+          <label>Start Scheduling From</label>
+          <input type="date" id="cadence-start-date" class="input-dark">
+        </div>
+
+        <!-- Humanized Jitter -->
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between;">
+            <label>Humanized Time Jitter</label>
+            <span id="jitter-val" style="font-size: 11px; color: var(--accent-cyan);">± 3 mins</span>
+          </div>
+          <input type="range" id="jitter-slider" min="0" max="15" value="3" style="width: 100%;" oninput="updateJitter(this.value)">
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="applyCadenceToQueue()">
+          <span>⚡ Apply Cadence To Queue</span>
+        </button>
+      </div>
+
+      <!-- Publishing Formats -->
+      <div class="panel-card">
+        <h2>📺 Publishing Formats</h2>
+        <p class="subtitle">ClipPilot auto-detects aspect ratio & tags appropriately.</p>
+        <div class="platform-pills" id="global-platforms">
+          <span class="platform-pill selected" data-pid="youtube">🔴 YouTube Video (16:9)</span>
+          <span class="platform-pill selected" data-pid="shorts">⚡ YouTube Shorts (9:16)</span>
+          <span class="platform-pill selected" data-pid="thumbnails">🖼️ Auto-Thumbnail Sync</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center Content: Queue & Dropzone -->
+    <section class="content-area">
+      
+      <!-- Drag & Drop Zone -->
+      <div class="drop-zone" id="drop-zone" onclick="browseAndAddVideo()">
+        <div class="icon">🎬</div>
+        <h3>Drop videos here or click to browse</h3>
+        <p>Supports MP4, MOV, MKV, WebM. Auto-detects matching thumbnail images and project notes.</p>
+      </div>
+
+      <!-- Queue Header -->
+      <div class="queue-header">
+        <h2>
+          <span>📋 Content Queue</span>
+          <span id="queue-badge-count" style="font-size: 13px; font-weight: 500; color: var(--text-dim);">0 items</span>
+        </h2>
+        <div style="display:flex; gap: 8px;">
+          <button class="btn btn-secondary btn-sm" onclick="clearEntireQueue()">Clear Queue</button>
+        </div>
+      </div>
+
+      <!-- Video Queue Cards Container -->
+      <div class="queue-list" id="queue-list">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit Metadata Modal -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="edit-modal-title">Edit Video Metadata</h2>
+        <button class="modal-close" onclick="closeEditModal()">✕</button>
+      </div>
+      <div class="form-group">
+        <label>Video Title</label>
+        <input type="text" id="edit-title" class="input-dark">
+      </div>
+      <div class="form-group">
+        <label>Description / Caption</label>
+        <textarea id="edit-description" class="input-dark" rows="5"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Tags & Hashtags (comma separated)</label>
+        <input type="text" id="edit-tags" class="input-dark">
+      </div>
+      <div class="form-group">
+        <label>Thumbnail Path</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="edit-thumbnail" class="input-dark" readonly>
+          <button class="btn btn-secondary btn-sm" onclick="browseThumbnailForEdit()">Browse</button>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveEditModal()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Metadata Generator Modal -->
+  <div class="modal-overlay" id="ai-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>✨ Multilingual AI SEO Generator</h2>
+        <button class="modal-close" onclick="closeAIModal()">✕</button>
+      </div>
+      <div class="form-group">
+        <label>Topic / Concept</label>
+        <input type="text" id="ai-topic" class="input-dark" placeholder="e.g. How to pump water without electricity">
+      </div>
+      <div class="form-group">
+        <label>Language & Audience Tone</label>
+        <select id="ai-language" class="input-dark">
+          <option value="hinglish" selected>Hinglish (Viral Indian Creators • High Reach)</option>
+          <option value="english">English (Global • Professional & SEO)</option>
+          <option value="hindi">Hindi (Pure Devanagari • Educational)</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 16px;" onclick="generateAIMetadata()">
+        <span>⚡ Generate SEO Titles & Captions</span>
+      </button>
+
+      <!-- AI Results Display -->
+      <div id="ai-results" style="display: none; flex-direction: column; gap: 12px;">
+        <div class="panel-card" style="padding: 14px; background: var(--bg-card);">
+          <h4 style="font-size: 13px; color: #ef4444; margin-bottom: 6px;">🔴 YouTube Optimized:</h4>
+          <p id="ai-yt-title" style="font-weight: 600; font-size: 13px; margin-bottom: 6px;"></p>
+          <p id="ai-yt-desc" style="font-size: 11.5px; color: var(--text-muted); white-space: pre-wrap; max-height: 120px; overflow-y: auto;"></p>
+        </div>
+        <div class="panel-card" style="padding: 14px; background: var(--bg-card);">
+          <h4 style="font-size: 13px; color: #d946ef; margin-bottom: 6px;">🟣 Instagram Reels Caption:</h4>
+          <p id="ai-ig-caption" style="font-size: 12px; color: var(--text-muted); white-space: pre-wrap; max-height: 100px; overflow-y: auto;"></p>
+        </div>
+        <button class="btn btn-success" style="width: 100%; justify-content: center;" onclick="applyAIToCurrentVideo()">
+          <span>✓ Apply to This Video</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connected Channels Modal -->
+  <div class="modal-overlay" id="accounts-modal">
+    <div class="modal-content" style="max-width: 720px;">
+      <div class="modal-header">
+        <h2>🔗 Connect Your Publishing Channels</h2>
+        <button class="modal-close" onclick="closeAccountsModal()">✕</button>
+      </div>
+      <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 16px;">
+        Connect your channels with 1 click. Your data stays 100% private on your own PC.
+      </p>
+      <div id="platform-settings-list" style="display: flex; flex-direction: column; gap: 14px;">
+        <!-- Injected dynamically -->
+      </div>
+      <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+        <button class="btn btn-secondary" onclick="closeAccountsModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

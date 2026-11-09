@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyInstaller & Build artifacts
+build/
+dist/
+dist_installer/
+*.spec
+
+# Secrets and OAuth keys
+*client_secret*
+*youtube_token*
+
+# Environment variables
+.env
