@@ -27,6 +27,7 @@ if APP_DIR not in sys.path:
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from core.scheduler import CadenceScheduler
@@ -36,6 +37,21 @@ from core.publishers import get_all_publishers
 from core.license_manager import LicenseManager
 
 app = FastAPI(title="ClipPilot", version="1.0.0")
+
+# Security Hardening: Restrict CORS strictly to local loopback origins to prevent cross-site port scanning & CSRF
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:8765",
+        "http://localhost:8765"
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
+ALLOWED_VIDEO_EXTS = {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v"}
+ALLOWED_PREVIEW_EXTS = {".png", ".jpg", ".jpeg", ".webp"}
 
 # Mount static files and set up data directory
 STATIC_DIR = os.path.join(BASE_DIR, "static")
@@ -134,8 +150,15 @@ def get_queue():
 @app.post("/api/queue/add")
 def add_to_queue(req: AddVideoRequest):
     try:
+        clean_path = os.path.realpath(req.file_path)
+        ext = os.path.splitext(clean_path)[1].lower()
+        if ext not in ALLOWED_VIDEO_EXTS:
+            raise HTTPException(status_code=400, detail="Invalid video format. Supported: MP4, MOV, MKV, AVI, WEBM")
+        if not (os.path.exists(clean_path) and os.path.isfile(clean_path)):
+            raise HTTPException(status_code=400, detail="Video file does not exist on disk")
+
         item = scheduler.add_video(
-            file_path=req.file_path,
+            file_path=clean_path,
             title=req.title,
             description=req.description or "",
             tags=req.tags,
@@ -143,6 +166,8 @@ def add_to_queue(req: AddVideoRequest):
             target_platforms=req.target_platforms
         )
         return {"success": True, "item": item}
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -277,9 +302,13 @@ def browse_thumbnail():
 
 @app.get("/api/browse/image_preview")
 def image_preview(path: str):
-    """Safely serves local image preview for thumbnails."""
-    if os.path.exists(path) and os.path.isfile(path):
-        return FileResponse(path)
+    """Safely serves local image preview for thumbnails with path traversal protection."""
+    clean_path = os.path.realpath(path)
+    ext = os.path.splitext(clean_path)[1].lower()
+    if ext not in ALLOWED_PREVIEW_EXTS:
+        raise HTTPException(status_code=403, detail="Forbidden: Only image preview files allowed")
+    if os.path.exists(clean_path) and os.path.isfile(clean_path):
+        return FileResponse(clean_path)
     raise HTTPException(status_code=404, detail="Image not found")
 
 @app.get("/api/upload/status")
