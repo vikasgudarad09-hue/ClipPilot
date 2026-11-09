@@ -19,6 +19,10 @@
     </div>
 
     <div class="nav-stats">
+      <div class="stat-pill" id="stat-plan-pill" onclick="openLicenseModal()" style="cursor: pointer; background: rgba(234, 179, 8, 0.12); border: 1px solid rgba(234, 179, 8, 0.35);">
+        <span>Plan:</span>
+        <span class="num" id="stat-plan-name" style="color: #fbbf24;">Free (5 left)</span>
+      </div>
       <div class="stat-pill">
         <span>Queue:</span>
         <span class="num" id="stat-queue-count">0</span>
@@ -34,6 +38,9 @@
     </div>
 
     <div class="nav-actions">
+      <button class="btn" id="btn-upgrade-pro" onclick="openLicenseModal()" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; font-weight: 700; border: none; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);">
+        <span>⚡ Upgrade</span>
+      </button>
       <button class="btn btn-secondary" onclick="openAccountsModal()">
         <span>🔗 Connect Channels</span>
       </button>
@@ -240,6 +247,57 @@
       </div>
       <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
         <button class="btn btn-secondary" onclick="closeAccountsModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pro Upgrade & License Modal -->
+  <div class="modal-overlay" id="license-modal">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 24px;">👑</span>
+          <div>
+            <h2 style="font-size: 18px; margin: 0;">ClipPilot Pro Lifetime</h2>
+            <span style="font-size: 11px; color: #fbbf24;">⚡ Launch Special Deal</span>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeLicenseModal()">✕</button>
+      </div>
+
+      <div style="margin: 16px 0; background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(168, 85, 247, 0.1)); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 12px; padding: 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div>
+            <h3 style="font-size: 20px; font-weight: 800; color: #fff; margin: 0;">₹499 <span style="font-size: 13px; font-weight: 400; color: #a1a1aa;">/ $9 USD</span></h3>
+            <span style="font-size: 12px; color: #ef4444; text-decoration: line-through;">Regular ₹1,999 / $29</span>
+          </div>
+          <span style="background: #10b981; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;">ONE-TIME LIFETIME</span>
+        </div>
+
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #e4e4e7;">
+          <li>✓ <strong>Unlimited Bulk Uploads</strong> (No 5-video limit)</li>
+          <li>✓ <strong>Intelligent Cadence Engine</strong> (Schedule months ahead on autopilot)</li>
+          <li>✓ <strong>Unlimited Multilingual AI SEO</strong> (Hinglish, Hindi, English)</li>
+          <li>✓ <strong>Zero-Token 1-Click YouTube Integration</strong></li>
+          <li>✓ <strong>Lifetime Software Updates & Free Support</strong></li>
+        </ul>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <a href="https://clippilot-studio.web.app/#pricing" target="_blank" class="btn btn-primary" style="justify-content: center; padding: 14px; font-size: 15px; font-weight: 700; background: linear-gradient(135deg, #a855f7, #6366f1); text-decoration: none;">
+          <span>💳 Buy License Key (Instant Delivery)</span>
+        </a>
+
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
+          <label style="font-size: 12px; font-weight: 600; color: var(--text-dim); display: block; margin-bottom: 6px;">Already have a license key?</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="license-key-input" class="input-dark" placeholder="e.g. CP-PRO-XXXXX-XXXX-XXXX" style="flex: 1; text-transform: uppercase;">
+            <button class="btn btn-success" onclick="activateLicenseKey()">
+              <span>Activate</span>
+            </button>
+          </div>
+          <div id="license-activate-msg" style="margin-top: 8px; font-size: 12px; display: none;"></div>
+        </div>
       </div>
     </div>
   </div>

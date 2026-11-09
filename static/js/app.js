@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadQueue();
+  loadLicenseStatus();
   setupDropZone();
   setupGlobalPlatformFilters();
 });
@@ -533,6 +534,94 @@ async function configurePlatformPrompt(platformId, platformName) {
   }
 }
 
+let currentPlanStatus = { is_pro: false, remaining_free: 5, plan_name: "Free Starter" };
+
+async function loadLicenseStatus() {
+  try {
+    const res = await fetch("/api/license/status");
+    const data = await res.json();
+    currentPlanStatus = data;
+    
+    const planPill = document.getElementById("stat-plan-pill");
+    const planName = document.getElementById("stat-plan-name");
+    const upgradeBtn = document.getElementById("btn-upgrade-pro");
+
+    if (data.is_pro) {
+      if (planName) {
+        planName.innerHTML = `👑 Pro Lifetime`;
+        planName.style.color = "#10b981";
+      }
+      if (planPill) {
+        planPill.style.background = "rgba(16, 185, 129, 0.12)";
+        planPill.style.borderColor = "rgba(16, 185, 129, 0.35)";
+      }
+      if (upgradeBtn) upgradeBtn.style.display = "none";
+    } else {
+      if (planName) {
+        planName.textContent = `Free (${data.remaining_free}/5 left)`;
+        planName.style.color = "#fbbf24";
+      }
+      if (planPill) {
+        planPill.style.background = "rgba(234, 179, 8, 0.12)";
+        planPill.style.borderColor = "rgba(234, 179, 8, 0.35)";
+      }
+      if (upgradeBtn) upgradeBtn.style.display = "inline-flex";
+    }
+  } catch (err) {
+    console.error("Failed to load license status:", err);
+  }
+}
+
+function openLicenseModal() {
+  const modal = document.getElementById("license-modal");
+  if (modal) modal.classList.add("active");
+  const msg = document.getElementById("license-activate-msg");
+  if (msg) msg.style.display = "none";
+}
+
+function closeLicenseModal() {
+  const modal = document.getElementById("license-modal");
+  if (modal) modal.classList.remove("active");
+}
+
+async function activateLicenseKey() {
+  const input = document.getElementById("license-key-input");
+  const msg = document.getElementById("license-activate-msg");
+  const key = input.value.trim().toUpperCase();
+
+  if (!key) {
+    msg.style.display = "block";
+    msg.style.color = "#ef4444";
+    msg.textContent = "Please enter your license key.";
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/license/activate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key })
+    });
+    const data = await res.json();
+    msg.style.display = "block";
+    if (data.success) {
+      msg.style.color = "#10b981";
+      msg.textContent = "🎉 " + data.message;
+      loadLicenseStatus();
+      setTimeout(() => {
+        closeLicenseModal();
+      }, 1600);
+    } else {
+      msg.style.color = "#ef4444";
+      msg.textContent = "❌ " + data.message;
+    }
+  } catch (err) {
+    msg.style.display = "block";
+    msg.style.color = "#ef4444";
+    msg.textContent = "Error activating key. Try again.";
+  }
+}
+
 // Bulk Upload Trigger & Live Status Polling
 async function startBulkUpload() {
   if (currentQueue.length === 0) {
@@ -554,9 +643,14 @@ async function startBulkUpload() {
     if (data.success) {
       startUploadPolling();
     } else {
-      alert(data.message);
       btn.disabled = false;
       btn.textContent = "🚀 Publish / Schedule All";
+      if (data.requires_pro) {
+        openLicenseModal();
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
     }
   } catch (err) {
     console.error("Upload start failed:", err);
@@ -581,6 +675,7 @@ function startUploadPolling() {
         document.getElementById("btn-start-bulk").disabled = false;
         document.getElementById("btn-start-bulk").textContent = "🚀 Publish / Schedule All";
         loadQueue();
+        loadLicenseStatus();
         alert(`🎉 Bulk publish / scheduling finished! Processed ${status.completed_count} videos.`);
       }
     } catch (err) {

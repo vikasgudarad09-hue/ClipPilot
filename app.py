@@ -33,6 +33,7 @@ from core.scheduler import CadenceScheduler
 from core.ai_metadata import AIMetadataGenerator
 from core.folder_watcher import FolderWatcher
 from core.publishers import get_all_publishers
+from core.license_manager import LicenseManager
 
 app = FastAPI(title="ClipPilot", version="1.0.0")
 
@@ -47,6 +48,7 @@ ACCOUNTS_CONFIG_PATH = os.path.join(DATA_DIR, "accounts.json")
 scheduler = CadenceScheduler(os.path.join(DATA_DIR, "queue.json"))
 ai_generator = AIMetadataGenerator()
 publishers = get_all_publishers(DATA_DIR)
+license_mgr = LicenseManager(DATA_DIR)
 
 # Load saved platform configs
 def load_accounts_config():
@@ -110,8 +112,20 @@ class PlatformConfigRequest(BaseModel):
 class StartUploadRequest(BaseModel):
     item_ids: Optional[List[str]] = None
 
+class ActivateLicenseRequest(BaseModel):
+    key: str
+
 
 # --- API Routes ---
+
+@app.get("/api/license/status")
+def get_license_status():
+    return license_mgr.get_status()
+
+@app.post("/api/license/activate")
+def activate_license(req: ActivateLicenseRequest):
+    success, msg = license_mgr.activate(req.key)
+    return {"success": success, "message": msg, "status": license_mgr.get_status()}
 
 @app.get("/api/queue")
 def get_queue():
@@ -334,6 +348,7 @@ def _run_upload_pipeline(item_ids: Optional[List[str]] = None):
                 "published_urls": urls
             })
             upload_state["completed_count"] += 1
+            license_mgr.increment_published_count(1)
 
         time.sleep(1)
 
@@ -346,6 +361,24 @@ def start_upload(req: StartUploadRequest, background_tasks: BackgroundTasks):
     global upload_state
     if upload_state["is_uploading"]:
         return {"success": False, "message": "An upload task is already in progress."}
+
+    if req.item_ids:
+        items_to_upload = [x for x in scheduler.queue if x["id"] in req.item_ids]
+    else:
+        items_to_upload = [x for x in scheduler.queue if x.get("status") in ["queued", "scheduled"]]
+
+    if not items_to_upload:
+        return {"success": False, "message": "Your queue is empty or no videos are ready to publish."}
+
+    allowed, limit_msg = license_mgr.can_publish_batch(len(items_to_upload))
+    if not allowed:
+        return {
+            "success": False,
+            "requires_pro": True,
+            "message": limit_msg,
+            "status": license_mgr.get_status()
+        }
+
     background_tasks.add_task(_run_upload_pipeline, req.item_ids)
     return {"success": True, "message": "Bulk upload pipeline started in background."}
 
