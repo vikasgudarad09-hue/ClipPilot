@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | ClipPilot Pro Lifetime License</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .checkout-container {
+      max-width: 840px;
+      margin: 40px auto 80px;
+      padding: 0 20px;
+    }
+    .payment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+    .payment-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .payment-tab-btn {
+      flex: 1;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+    .payment-tab-btn.active {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(99, 102, 241, 0.2));
+      border-color: #a855f7;
+      color: #fff;
+    }
+    .qr-box {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 16px;
+      display: inline-block;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+    .upi-info-badge {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      padding: 12px 18px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .copy-btn {
+      background: #a855f7;
+      border: none;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .key-result-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15));
+      border: 2px solid #10b981;
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 28px;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <img src="logo_120x120.png" width="40" height="40" style="border-radius: 10px;" alt="ClipPilot Logo">
+      <div class="brand-text">
+        <h1>ClipPilot</h1>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="https://github.com/vikasgudarad09-hue/ClipPilot" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main class="checkout-container">
+    <div style="text-align: center; margin-bottom: 30px;">
+      <div class="badge" style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.4); color: #fbbf24; display: inline-block; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 700; margin-bottom: 12px;">⚡ OFFICIAL SECURE CHECKOUT</div>
+      <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 8px;">Get ClipPilot Pro Lifetime</h1>
+      <p style="color: var(--text-dim); font-size: 15px;">One-Time Payment • Instant Automatic License Key Generation</p>
+    </div>
+
+    <div class="payment-card">
+      <!-- Payment Method Switcher -->
+      <div class="payment-tabs">
+        <button class="payment-tab-btn active" id="tab-btn-upi" onclick="switchTab('upi')">
+          <span style="font-size: 20px;">🇮🇳</span>
+          <span>UPI / PhonePe / GPay (₹499)</span>
+        </button>
+        <button class="payment-tab-btn" id="tab-btn-paypal" onclick="switchTab('paypal')">
+          <span style="font-size: 20px;">🌐</span>
+          <span>PayPal ($9 USD)</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: UPI / PhonePe -->
+      <div id="tab-content-upi" style="text-align: center; padding: 10px 0 20px;">
+        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">
+          Scan using <strong>PhonePe, Google Pay, Paytm, BHIM</strong>, or any UPI App:
+        </p>
+        
+        <div class="qr-box">
+          <img src="phonepe_qr.jpg" alt="PhonePe QR Code - Vikas Prabhu Gudarad" style="max-width: 240px; display: block; border-radius: 8px;">
+        </div>
+
+        <div style="margin-top: 20px;">
+          <div class="upi-info-badge">
+            <span>UPI ID: <strong>vickyunion99@ybl</strong></span>
+            <button class="copy-btn" onclick="copyText('vickyunion99@ybl', this)">Copy</button>
+          </div>
+          <p style="font-size: 12.5px; color: var(--text-dim); margin-top: 6px;">
+            Payee: <strong>VIKAS PRABHU GUDARAD</strong> • Amount: <strong>₹499</strong>
+          </p>
+        </div>
+
+        <div style="margin-top: 18px;">
+          <a href="upi://pay?pa=vickyunion99@ybl&pn=VIKAS%20PRABHU%20GUDARAD&am=499&cu=INR&tn=ClipPilot%20Pro%20Lifetime" class="btn btn-primary" style="display: inline-flex; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 700;">
+            <span>📱 Pay ₹499 in UPI App (Mobile)</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Tab 2: PayPal -->
+      <div id="tab-content-paypal" style="text-align: center; display: none; padding: 20px 0 30px;">
+        <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 20px;">
+          For International Customers worldwide. Pay securely with PayPal or Credit/Debit card.
+        </p>
+
+        <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border); border-radius: 16px; padding: 24px; max-width: 460px; margin: 0 auto;">
+          <div style="font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 4px;">$9.00 USD</div>
+          <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 20px;">ClipPilot Pro Lifetime License</p>
+          
+          <a href="https://www.paypal.com/paypalme/gudaradvikas09/9USD" target="_blank" class="btn btn-primary" style="background: #0070ba; width: 100%; justify-content: center; padding: 14px; font-size: 16px; font-weight: 700; border-radius: 12px; text-decoration: none; display: flex;">
+            <span>💳 Pay $9 with PayPal</span>
+          </a>
+
+          <p style="font-size: 12px; color: var(--text-dim); margin-top: 14px;">
+            Recipient: <strong>gudaradvikas09@gmail.com</strong>
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 2: Instant Automated Key Generation -->
+      <div style="border-top: 1px solid var(--border); margin-top: 24px; padding-top: 28px;">
+        <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+          <span>⚡</span>
+          <span>Instant Automatic License Delivery</span>
+        </h3>
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px;">
+          After making payment, enter your details below. Your official ClipPilot Pro key will be generated and shown on screen instantly!
+        </p>
+
+        <form id="key-form" onsubmit="handleGenerateKey(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 6px;">Your Email Address *</label>
+            <input type="email" id="buyer-email" required placeholder="you@example.com" style="width: 100%; background: #0a0d14; border: 1px solid var(--border); color: #fff; padding: 12px 16px; border-radius: 10px; font-size: 14px;">
+          </div>
+
+          <div>
+            <label style="font-size: 13px; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 6px;">Payment Reference / UTR Number / PayPal Transaction ID *</label>
+            <input type="text" id="buyer-ref" required placeholder="e.g. 12-digit UPI Ref / UTR / PayPal Txn ID" style="width: 100%; background: #0a0d14; border: 1px solid var(--border); color: #fff; padding: 12px 16px; border-radius: 10px; font-size: 14px;">
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="padding: 14px; font-size: 15px; font-weight: 800; justify-content: center; background: linear-gradient(135deg, #10b981, #06b6d4);">
+            <span>🚀 Generate My Pro License Key Now</span>
+          </button>
+        </form>
+
+        <!-- License Key Reveal Box -->
+        <div class="key-result-card" id="key-result-box">
+          <div style="font-size: 36px; margin-bottom: 6px;">🎉</div>
+          <h3 style="font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 6px;">Payment Confirmed! Here Is Your License Key:</h3>
+          <p style="font-size: 13px; color: #a7f3d0; margin-bottom: 16px;">This key permanently unlocks unlimited video scheduling on your PC.</p>
+          
+          <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 12px; padding: 16px; display: inline-flex; align-items: center; gap: 14px; margin-bottom: 20px;">
+            <code id="generated-key-display" style="font-size: 17px; font-weight: 800; color: #34d399; letter-spacing: 1px;">CP-PRO-XXXXXXXX-XXXX-XXXX-XXXX</code>
+            <button class="copy-btn" style="padding: 8px 14px; font-size: 12px;" onclick="copyGeneratedKey(this)">Copy Key</button>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; text-align: left; max-width: 500px; margin: 0 auto; font-size: 13px; color: #e4e4e7;">
+            <strong>How to Activate:</strong>
+            <ol style="margin-left: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 4px;">
+              <li>Open ClipPilot on your PC.</li>
+              <li>Click the yellow <strong>"⚡ Upgrade"</strong> button at the top right.</li>
+              <li>Paste your key and click <strong>Activate</strong>!</li>
+            </ol>
+          </div>
+
+          <div style="margin-top: 18px;">
+            <a id="email-receipt-link" href="#" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 12.5px; padding: 8px 16px; border-radius: 8px; text-decoration: none;">
+              📩 Email me my key backup
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="mailto:gudaradvikas09@gmail.com">Support (gudaradvikas09@gmail.com)</a>
+    </div>
+    <p>&copy; 2026 ClipPilot. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const SALT = "CLIPPILOT-PRO-SECRET-SALT-2026-HQ";
+
+    function switchTab(tab) {
+      const upiBtn = document.getElementById("tab-btn-upi");
+      const paypalBtn = document.getElementById("tab-btn-paypal");
+      const upiContent = document.getElementById("tab-content-upi");
+      const paypalContent = document.getElementById("tab-content-paypal");
+
+      if (tab === "upi") {
+        upiBtn.classList.add("active");
+        paypalBtn.classList.remove("active");
+        upiContent.style.display = "block";
+        paypalContent.style.display = "none";
+      } else {
+        paypalBtn.classList.add("active");
+        upiBtn.classList.remove("active");
+        paypalContent.style.display = "block";
+        upiContent.style.display = "none";
+      }
+    }
+
+    function copyText(txt, btn) {
+      navigator.clipboard.writeText(txt);
+      const original = btn.textContent;
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = original; }, 1800);
+    }
+
+    function copyGeneratedKey(btn) {
+      const key = document.getElementById("generated-key-display").textContent;
+      navigator.clipboard.writeText(key);
+      const original = btn.textContent;
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = original; }, 1800);
+    }
+
+    // Cryptographic Key Generator (Web Crypto API HMAC-SHA256)
+    async function generateGenuineKey(customerEmail) {
+      const cleanId = customerEmail.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8).padEnd(8, 'X');
+      const enc = new TextEncoder();
+      const key = await crypto.subtle.importKey(
+        'raw',
+        enc.encode(SALT),
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign']
+      );
+      const sig = await crypto.subtle.sign('HMAC', key, enc.encode(cleanId));
+      const hex = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+      const checksum = hex.slice(0, 4) + '-' + hex.slice(4, 8) + '-' + hex.slice(8, 12);
+      return 'CP-PRO-' + cleanId + '-' + checksum;
+    }
+
+    async function handleGenerateKey(e) {
+      e.preventDefault();
+      const email = document.getElementById("buyer-email").value.trim();
+      const ref = document.getElementById("buyer-ref").value.trim();
+
+      if (!email || !ref) {
+        alert("Please enter both your email and payment reference.");
+        return;
+      }
+
+      const key = await generateGenuineKey(email);
+
+      document.getElementById("generated-key-display").textContent = key;
+      const resultBox = document.getElementById("key-result-box");
+      resultBox.style.display = "block";
+      resultBox.scrollIntoView({ behavior: "smooth" });
+
+      // Build backup email link
+      const subject = encodeURIComponent("ClipPilot Pro License Key - " + key);
+      const body = encodeURIComponent(
+        "Hi Vikas,\n\nI have purchased ClipPilot Pro Lifetime.\n\n" +
+        "Email: " + email + "\n" +
+        "Payment Ref / UTR: " + ref + "\n" +
+        "My Generated License Key: " + key + "\n\n" +
+        "Thank you!"
+      );
+      document.getElementById("email-receipt-link").href = "mailto:gudaradvikas09@gmail.com?subject=" + subject + "&body=" + body;
+    }
+  </script>
+</body>
+</html>

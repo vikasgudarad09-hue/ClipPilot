@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "jpmediasaver"
+  },
+  "targets": {
+    "jpmediasaver": {
+      "hosting": {
+        "clippilot": [
+          "clippilot-studio"
+        ]
+      }
+    }
+  }
+}

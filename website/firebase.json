@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "target": "clippilot",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
