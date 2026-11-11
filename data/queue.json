@@ -84,5 +84,31 @@
     "created_at": 1794400925.7879877,
     "scheduled_time_iso": null,
     "scheduled_time_human": null
+  },
+  {
+    "id": "vid_tour_demo",
+    "file_path": "F:\\JPCREATIONS\\YOUTUBE VIDEOS\\blender educational videos\\how to pump from no electric\\rendered_videos\\ClipPilot_Product_Tour_Full_Walkthrough.mp4",
+    "file_name": "ClipPilot_Product_Tour_Full_Walkthrough.mp4",
+    "file_size_mb": 0.95,
+    "title": "ClipPilot Studio Full Demo: Put Your YouTube & Shorts Publishing on Autopilot! 🚀",
+    "description": "Watch the complete official walkthrough of ClipPilot Studio — the all-in-one local desktop automation app built for 3D animators, educators, and content creators!\n\n✨ Key Capabilities Demonstrated:\n00:00 - Introduction & Zero-Token Architecture\n00:04 - Visual Content Queue & Instant In-App Video Preview\n00:09 - 1-Click Multilingual AI SEO Studio (Hinglish/Hindi/English)\n00:14 - Autonomous YouTube & Shorts Publishing Engine\n00:18 - Live Website & 100% Automated Instant License Checkout\n00:22 - Download & Official Links\n\n🌐 Official Website: https://clippilot-studio.web.app\n⚡ Upgrade to Pro Lifetime for ₹499 / $9: https://clippilot-studio.web.app/checkout.html\n\n#ClipPilot #YouTubeAutomation #CreatorTools #MadeInIndia #BlenderToYouTube",
+    "tags": [
+      "ClipPilot",
+      "youtube automation",
+      "video publishing on autopilot",
+      "creator tools",
+      "ai seo generator",
+      "blender to youtube",
+      "made in india software",
+      "automated video publishing"
+    ],
+    "thumbnail_path": "F:\\JPCREATIONS\\YOUTUBE VIDEOS\\blender educational videos\\how to pump from no electric\\rendered_videos\\ClipPilot_Product_Tour_thumb.png",
+    "target_platforms": [
+      "youtube"
+    ],
+    "status": "queued",
+    "created_at": 1794402390.0,
+    "scheduled_time_iso": null,
+    "scheduled_time_human": null
   }
 ]
