@@ -18,33 +18,46 @@ class AIMetadataGenerator:
         Generate platform-tailored metadata for YouTube, Instagram, LinkedIn, and X.
         """
         clean_topic = topic_or_title.strip()
+        is_short = "#shorts" in clean_topic.lower() or "short" in clean_topic.lower()
+        topic_core = clean_topic.replace("#Shorts", "").replace("#shorts", "").replace("(Shorts)", "").strip()
+
+        # High-CTR Viral Title Engine
+        if is_short:
+            yt_title = f"{topic_core} 🌊 (3D Cutaway Explained) #shorts #engineering"
+        elif "pump" in topic_core.lower() or "water" in topic_core.lower():
+            yt_title = "How 40-Feet Deep Water is Pumped with ZERO Electricity (India Mark II 3D Animation)"
+        elif "wagon" in topic_core.lower() or "train" in topic_core.lower():
+            yt_title = "How Rapid Gravity-Discharge Railway Wagons Empty 60 Tons in 30 Seconds! (Full 3D Animation)"
+        else:
+            yt_title = f"{topic_core} | Complete 3D Visual & Engineering Guide"
 
         # Hinglish Mode (Highest viral traction for Indian creators)
         if language.lower() == "hinglish":
-            yt_title = f"{clean_topic} Kaise Kaam Karta Hai? 💡 (Full 3D Animation Guide)"
             yt_desc = (
-                f"Iss video mein hum step-by-step 3D animation ke through detail mein samjhenge ki "
-                f"{clean_topic} practically kaise kaam karta hai aur iske working principles kya hain.\n\n"
-                f"📌 Video Highlights & Chapters:\n"
-                f"00:00 - Introduction & Overview\n"
-                f"00:45 - Internal Components & Mechanism\n"
-                f"02:15 - Working Principle in Action\n"
-                f"03:50 - Real-World Applications & Advantages\n"
-                f"05:10 - Summary & Key Takeaways\n\n"
-                f"🔔 Subscribe kijiye aise aur informative 3D animation videos dekhne ke liye!\n"
-                f"#3DAnimation #HindiEducation #{clean_topic.replace(' ', '')}"
+                f"Iss detailed 3D animation video mein hum step-by-step samjhenge: {topic_core}.\n\n"
+                f"🔬 Kya aapne kabhi socha hai ki yeh mechanism bina kisi electric power ke practical world mein kaise perform karta hai? "
+                f"Iss video mein 3D visual cutaways aur cross-sections ke zariye har ek moving component aur valve ko clearly dikhaya gaya hai.\n\n"
+                f"📌 Video Highlights & Key Concepts:\n"
+                f"00:00 - Introduction & Core Engineering Principle\n"
+                f"00:45 - Internal Components & Cutaway View\n"
+                f"02:15 - Working Mechanism & Fluid Dynamics\n"
+                f"03:50 - Real-World Applications & Efficiency\n"
+                f"05:10 - Summary & Technical Insights\n\n"
+                f"🔔 Subscribe kijiye aise aur high-retention 3D animation videos dekhne ke liye!\n"
+                f"#3DAnimation #Engineering #HindiEducation #Blender3D #HowItWorks"
             )
             ig_caption = (
-                f"Bina kisi confusion ke samjhein: {clean_topic}! 🚀\n\n"
-                f"Yeh 3D visual demonstration aapko clear mechanism samjha dega. "
-                f"Share karein un doston ke saath jo engineering aur visual learning pasand karte hain! 👇\n\n"
+                f"Mind-blowing 3D Engineering: {topic_core}! 🚀\n\n"
+                f"Dekhiye kaise yeh mechanism bina kisi complex machine ke 100% naturally kaam karta hai. "
+                f"Tag karein un doston ko jinko mechanical engineering aur 3D animations pasand hain! 👇\n\n"
                 f"#ReelsIndia #IndianCreators #3DAnimation #EducationalReels #EngineeringIndia "
                 f"#LearnInHindi #HowItWorks #BlenderIndia #AnimationLife"
             )
             tags = [
-                clean_topic, f"{clean_topic} in hindi", f"{clean_topic} working principle",
-                "3d animation explanation", "educational video", "how it works hindi",
-                "blender animation", "mechanical engineering", "step by step guide"
+                topic_core, f"{topic_core} in hindi", "3d animation explanation",
+                "educational video", "how it works hindi", "blender 3d animation",
+                "mechanical engineering", "step by step guide", "science explainer",
+                "zero electricity", "viral engineering"
             ]
 
         # Hindi (Pure)

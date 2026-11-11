@@ -54,10 +54,12 @@ def launch_clippilot_studio():
     input("\nPress ENTER to return to menu...")
 
 def generate_customer_license():
-    print("\n[+] Customer License Key Generator")
-    email = input("Enter customer email or order reference: ").strip()
+    print("\n[+] Admin Offline Key Generator (Optional Manual Backup Tool)")
+    print("[i] NOTE: Paying customers receive their license key 100% AUTOMATICALLY")
+    print("    on the checkout page (https://clippilot-studio.web.app/checkout.html).")
+    print("    You only need this tool if you wish to generate custom VIP/founder keys manually.\n")
+    email = input("Enter email or reference (or press ENTER to return to menu): ").strip()
     if not email:
-        print("[!] Email cannot be empty.")
         return
     studio_dir = os.path.join(BASE_DIR, "OmniPost_Studio")
     subprocess.run([sys.executable, "generate_key.py", email], cwd=studio_dir)
@@ -97,7 +99,7 @@ def main():
         print(" [2] 🎯 Run Creator Outreach & Generate Viral Distribution Kit")
         print(" [3] 🚀 Launch ClipPilot Studio Desktop App")
         print(" [4] 📊 View Current Video Publishing Queue")
-        print(" [5] 🔑 Generate Pro License Key (for paying customers)")
+        print(" [5] 🔑 Admin Offline Key Generator (Backup Tool - Website Delivers Automatically)")
         print(" [6] 🌐 Open Live Website & Checkout Page")
         print(" [0] ❌ Exit")
         print("="*64)

@@ -4,8 +4,8 @@
     "file_path": "F:\\Sumit projects\\Alumini wagon_20_03_2026\\16.mp4",
     "file_name": "16.mp4",
     "file_size_mb": 2.66,
-    "title": "a new alumini 3d wagon design Kaise Kaam Karta Hai? \ud83d\udca1 (Full 3D Animation Guide)",
-    "description": "Iss video mein hum step-by-step 3D animation ke through detail mein samjhenge ki a new alumini 3d wagon design practically kaise kaam karta hai aur iske working principles kya hain.\n\n\ud83d\udccc Video Highlights & Chapters:\n00:00 - Introduction & Overview\n00:45 - Internal Components & Mechanism\n02:15 - Working Principle in Action\n03:50 - Real-World Applications & Advantages\n05:10 - Summary & Key Takeaways\n\n\ud83d\udd14 Subscribe kijiye aise aur informative 3D animation videos dekhne ke liye!\n#3DAnimation #HindiEducation #anewalumini3dwagondesign",
+    "title": "How Rapid Gravity-Discharge Railway Wagons Empty 60 Tons in 30 Seconds! 🚆 (Full 3D Animation)",
+    "description": "Iss detailed 3D animation video mein hum step-by-step samjhenge: Rapid Gravity-Discharge Aluminum Railway Wagons (BOBRN/Alumini Wagon).\n\n🔬 Dekhiye kaise yeh modern bottom-discharge wagons bina kisi manual labour ke, gravitational force aur pneumatic levers ke zariye moving train se 60+ tons of material sirf 30 seconds mein unload kar dete hain!\n\n📌 Video Highlights & Key Chapters:\n00:00 - Introduction & Wagon Aerodynamics\n00:45 - Pneumatic Door Opening Mechanism\n02:15 - Rapid Gravity Discharge in Action\n03:50 - Track-side Induction & Safety Sensors\n05:10 - Efficiency & Engineering Advantages\n\n🔔 Subscribe kijiye aise aur informative 3D engineering animation videos dekhne ke liye!\n#3DAnimation #IndianRailways #MechanicalEngineering #HowItWorks #Blender3D",
     "tags": [
       "a new alumini 3d wagon design",
       "a new alumini 3d wagon design in hindi",
@@ -34,19 +34,19 @@
     "id": "vid_609977b7",
     "file_path": "F:\\JPCREATIONS\\YOUTUBE VIDEOS\\blender educational videos\\how to pump from no electric\\rendered_videos\\02_short_zero_electricity_pump.mp4",
     "file_name": "02_short_zero_electricity_pump.mp4",
-    "file_size_mb": 0.11,
-    "title": "How to pump water with ZERO electricity #Shorts Kaise Kaam Karta Hai? \ud83d\udca1 (Full 3D Animation Guide)",
-    "description": "Iss video mein hum step-by-step 3D animation ke through detail mein samjhenge ki How to pump water with ZERO electricity #Shorts practically kaise kaam karta hai aur iske working principles kya hain.\n\n\ud83d\udccc Video Highlights & Chapters:\n00:00 - Introduction & Overview\n00:45 - Internal Components & Mechanism\n02:15 - Working Principle in Action\n03:50 - Real-World Applications & Advantages\n05:10 - Summary & Key Takeaways\n\n\ud83d\udd14 Subscribe kijiye aise aur informative 3D animation videos dekhne ke liye!\n#3DAnimation #HindiEducation #HowtopumpwaterwithZEROelectricity#Shorts",
+    "file_size_mb": 0.26,
+    "title": "How 40-Feet Deep Water is Pumped with ZERO Electricity! 🤯 #shorts #engineering",
+    "description": "Watch how a mechanical India Mark II deep-well hand pump pulls water from 40 feet underground with ZERO electricity using dual check-valves and atmospheric pressure!\n\n#Shorts #Engineering #3DAnimation #Science #HowItWorks #Blender3D",
     "tags": [
-      "How to pump water with ZERO electricity #Shorts",
-      "How to pump water with ZERO electricity #Shorts in hindi",
-      "How to pump water with ZERO electricity #Shorts working principle",
-      "3d animation explanation",
-      "educational video",
-      "how it works hindi",
-      "blender animation",
+      "hand pump",
+      "how hand pump works",
+      "zero electricity water pump",
+      "3d animation",
+      "shorts",
       "mechanical engineering",
-      "step by step guide"
+      "atmospheric pressure",
+      "science experiment",
+      "deep well pump"
     ],
     "thumbnail_path": "F:\\JPCREATIONS\\YOUTUBE VIDEOS\\blender educational videos\\how to pump from no electric\\rendered_videos\\02_short_zero_electricity_pump_thumb.png",
     "target_platforms": [
@@ -54,6 +54,34 @@
     ],
     "status": "queued",
     "created_at": 1794396975.027304,
+    "scheduled_time_iso": null,
+    "scheduled_time_human": null
+  },
+  {
+    "id": "vid_3631c8eb",
+    "file_path": "F:\\JPCREATIONS\\YOUTUBE VIDEOS\\blender educational videos\\how to pump from no electric\\rendered_videos\\01_india_mark_2_full_mechanism.mp4",
+    "file_name": "01_india_mark_2_full_mechanism.mp4",
+    "file_size_mb": 0.17,
+    "title": "How India Mark II Hand Pump Pulls Water From 40 Feet Underground (Complete 3D Cutaway)",
+    "description": "Ever wondered how village hand pumps pull heavy water from deep underground without electricity?\n\nIn this detailed 3D animation, we explore the internal mechanics of the iconic India Mark II deep-well hand pump:\n- The Above-Ground Lever & Head Assembly\n- The 4-Tier Geological Strata & Aquifer Bed (-12M)\n- The Dual Valve System: Reciprocating Piston Valve & Gravity Foot Valve\n- Vacuum & Atmospheric Pressure Dynamics\n\n📌 Timestamps:\n00:00 - Introduction & Hand Pump Architecture\n00:45 - The Underground Borewell & Aquifer Layer\n01:30 - Downstroke: Piston Valve Opens\n02:45 - Upstroke: Foot Valve Suction & Lift\n03:45 - Continuous Water Output & Collection\n\n🔔 Subscribe to JP Creations for weekly high-detail 3D engineering breakdowns!\n#3DAnimation #Engineering #HowItWorks #Blender3D #HindiEducation",
+    "tags": [
+      "hand pump",
+      "how hand pump works 3d",
+      "india mark 2 hand pump",
+      "deep well pump",
+      "zero electricity",
+      "blender 3d",
+      "engineering animation",
+      "fluid dynamics",
+      "educational video",
+      "how it works hindi"
+    ],
+    "thumbnail_path": "F:\\JPCREATIONS\\YOUTUBE VIDEOS\\blender educational videos\\how to pump from no electric\\rendered_videos\\01_india_mark_2_full_mechanism_thumb.png",
+    "target_platforms": [
+      "youtube"
+    ],
+    "status": "queued",
+    "created_at": 1794400925.7879877,
     "scheduled_time_iso": null,
     "scheduled_time_human": null
   }
