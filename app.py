@@ -322,6 +322,24 @@ def video_stream(path: str):
         return FileResponse(clean_path, media_type="video/mp4")
     raise HTTPException(status_code=404, detail="Video file not found")
 
+@app.post("/api/browse/open_in_player")
+def open_in_player(payload: dict):
+    """Opens the video file in Windows default media player (VLC, Windows Media Player, etc.)."""
+    path = payload.get("path")
+    if not path:
+        raise HTTPException(status_code=400, detail="Path is required")
+    clean_path = os.path.realpath(path)
+    ext = os.path.splitext(clean_path)[1].lower()
+    if ext not in ALLOWED_VIDEO_EXTS:
+        raise HTTPException(status_code=403, detail="Forbidden: Only video files can be opened")
+    if os.path.exists(clean_path) and os.path.isfile(clean_path):
+        try:
+            os.startfile(clean_path)
+            return {"success": True, "message": f"Opened {os.path.basename(clean_path)} in system player"}
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+    raise HTTPException(status_code=404, detail="Video file not found")
+
 @app.get("/api/upload/status")
 def get_upload_status():
     return upload_state

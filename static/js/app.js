@@ -576,14 +576,20 @@ async function loadLicenseStatus() {
 
 function openLicenseModal() {
   const modal = document.getElementById("license-modal");
-  if (modal) modal.classList.add("active");
+  if (modal) {
+    modal.style.display = "flex";
+    modal.classList.add("active");
+  }
   const msg = document.getElementById("license-activate-msg");
   if (msg) msg.style.display = "none";
 }
 
 function closeLicenseModal() {
   const modal = document.getElementById("license-modal");
-  if (modal) modal.classList.remove("active");
+  if (modal) {
+    modal.style.display = "none";
+    modal.classList.remove("active");
+  }
 }
 
 async function activateLicenseKey() {
@@ -687,6 +693,8 @@ function startUploadPolling() {
 }
 
 // In-App Video Playback Modal
+let currentPreviewPath = "";
+
 function openVideoModal(encodedPath, title) {
   const modal = document.getElementById("video-preview-modal");
   const player = document.getElementById("video-player-elem");
@@ -694,9 +702,17 @@ function openVideoModal(encodedPath, title) {
   
   if (!modal || !player) return;
   
+  try {
+    currentPreviewPath = decodeURIComponent(encodedPath);
+  } catch (e) {
+    currentPreviewPath = encodedPath;
+  }
+  
   player.src = `/api/browse/video_stream?path=${encodedPath}`;
   modalTitle.textContent = "🎬 " + title;
+  modal.style.display = "flex";
   modal.classList.add("active");
+  player.load();
   player.play().catch(e => console.log("Autoplay waiting for user gesture:", e));
 }
 
@@ -705,7 +721,24 @@ function closeVideoModal() {
   const player = document.getElementById("video-player-elem");
   if (player) {
     player.pause();
-    player.src = "";
+    player.removeAttribute("src");
+    player.load();
   }
-  if (modal) modal.classList.remove("active");
+  if (modal) {
+    modal.style.display = "none";
+    modal.classList.remove("active");
+  }
+}
+
+async function openInSystemPlayer() {
+  if (!currentPreviewPath) return;
+  try {
+    await fetch("/api/browse/open_in_player", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: currentPreviewPath })
+    });
+  } catch (e) {
+    console.error("Failed to open video in system player:", e);
+  }
 }

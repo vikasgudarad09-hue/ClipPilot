@@ -532,6 +532,10 @@ body {
   z-index: 1000;
 }
 
+.modal-overlay.active {
+  display: flex !important;
+}
+
 .modal-content {
   background: var(--bg-secondary);
   border: 1px solid var(--border-glow);
