@@ -311,6 +311,17 @@ def image_preview(path: str):
         return FileResponse(clean_path)
     raise HTTPException(status_code=404, detail="Image not found")
 
+@app.get("/api/browse/video_stream")
+def video_stream(path: str):
+    """Safely streams local video file for in-app video playback."""
+    clean_path = os.path.realpath(path)
+    ext = os.path.splitext(clean_path)[1].lower()
+    if ext not in ALLOWED_VIDEO_EXTS:
+        raise HTTPException(status_code=403, detail="Forbidden: Only video files can be previewed")
+    if os.path.exists(clean_path) and os.path.isfile(clean_path):
+        return FileResponse(clean_path, media_type="video/mp4")
+    raise HTTPException(status_code=404, detail="Video file not found")
+
 @app.get("/api/upload/status")
 def get_upload_status():
     return upload_state

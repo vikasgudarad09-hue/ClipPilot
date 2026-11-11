@@ -81,16 +81,17 @@ function renderQueue() {
 
     return `
       <div class="queue-card" id="card-${item.id}">
-        <!-- Thumbnail -->
-        <div class="video-thumb">
+        <!-- Thumbnail with 1-click video player -->
+        <div class="video-thumb" onclick="openVideoModal('${encodeURIComponent(item.file_path)}', '${escapeAttr(item.title)}')" style="cursor: pointer; position: relative;" title="Click to Watch Video">
           ${thumbHtml}
           <span class="badge-res">HD</span>
+          <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 22px; background: rgba(0,0,0,0.65); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid rgba(255,255,255,0.4); pointer-events: none;">▶</span>
         </div>
 
         <!-- Details -->
         <div class="card-details">
           <div class="card-title">
-            <span>${item.title}</span>
+            <span onclick="openVideoModal('${encodeURIComponent(item.file_path)}', '${escapeAttr(item.title)}')" style="cursor: pointer;" title="Click to Watch Video">${item.title}</span>
             <button class="btn btn-secondary btn-sm" onclick="openAIModalForVideo('${item.id}', '${escapeAttr(item.title)}')">
               <span>✨ AI SEO</span>
             </button>
@@ -112,6 +113,7 @@ function renderQueue() {
 
         <!-- Actions -->
         <div class="card-actions">
+          <button class="btn btn-primary btn-sm" onclick="openVideoModal('${encodeURIComponent(item.file_path)}', '${escapeAttr(item.title)}')">▶️ Watch</button>
           <button class="btn btn-secondary btn-sm" onclick="openEditModal('${item.id}')">✏️ Edit</button>
           <button class="btn btn-secondary btn-sm" style="color: var(--accent-danger);" onclick="deleteVideo('${item.id}')">🗑️</button>
         </div>
@@ -682,4 +684,28 @@ function startUploadPolling() {
       console.error("Polling error:", err);
     }
   }, 1000);
+}
+
+// In-App Video Playback Modal
+function openVideoModal(encodedPath, title) {
+  const modal = document.getElementById("video-preview-modal");
+  const player = document.getElementById("video-player-elem");
+  const modalTitle = document.getElementById("video-modal-title");
+  
+  if (!modal || !player) return;
+  
+  player.src = `/api/browse/video_stream?path=${encodedPath}`;
+  modalTitle.textContent = "🎬 " + title;
+  modal.classList.add("active");
+  player.play().catch(e => console.log("Autoplay waiting for user gesture:", e));
+}
+
+function closeVideoModal() {
+  const modal = document.getElementById("video-preview-modal");
+  const player = document.getElementById("video-player-elem");
+  if (player) {
+    player.pause();
+    player.src = "";
+  }
+  if (modal) modal.classList.remove("active");
 }
